@@ -1,2 +1,2 @@
 # evlytics-wa-portfolio-project
-....Coming Soon
+Electric Vehicle Project....Currently in development.
