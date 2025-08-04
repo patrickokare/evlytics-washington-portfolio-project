@@ -1,2 +1,2 @@
 # evlytics-wa-portfolio-project
-Electric Vehicle Project....Currently in development.
+Currently developing the Electric Vehicle Project....Deployment on August 27th 2025.
