@@ -1,4 +1,4 @@
-# Author: Patrick Okra
+# Author: Patrick Okare
 # Date: 2025-08-08
 # Script: DimElectricUtility SCD Merge Logic
 # Description: Implements deduplication and SCD Type 1 logic for the DimElectricUtility table using data from the Silver layer.
