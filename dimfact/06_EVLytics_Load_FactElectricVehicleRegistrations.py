@@ -1,8 +1,10 @@
-# Databricks notebook source
+# Fact Table Creation - Fact_ElectricVehicleRegistrations
+# Author: Patrick Okare
+# Description: Snapshot fact table creation using SCD Type 1 logic
+# Source: EVLytics_silver.vehiclepopulation
+# Target: EVLytics_gold.Fact_ElectricVehicleRegistrations
 
-
-# COMMAND ----------
-
+# Step 1 - Transform: Join dimension tables and enrich the source data
 fact_electricVehicleRegistrations = spark.sql("""
 SELECT 
     VP.ingestion_date AS SnapshotDate, -- snapshot date from system
@@ -13,6 +15,7 @@ SELECT
     COALESCE(DG.GeoPointKey, -1) AS GeoPointKey,
     COALESCE(DLD.LegislativeDistrictKey, -1) AS LegislativeDistrictKey,
 
+    -- Degenerate dimensions and transaction details
     VP.VehicleIdentificationNumber,
     VP.ElectricVehicleType,
     VP.CAFVEligibility,
@@ -26,6 +29,7 @@ SELECT
     NULL AS UpdatedDate,
     current_timestamp() AS InsertedDate,
 
+    -- HASH_ID for change detection
     sha2(concat_ws('||',
         COALESCE(CAST(DD.Date_ID AS STRING), ''),
         COALESCE(CAST(DL.LocationKey AS STRING), ''),
@@ -40,64 +44,85 @@ SELECT
         COALESCE(CAST(VP.BaseMSRP AS STRING), ''),
         COALESCE(VP.DOLVehicleID, ''),
         COALESCE(VP.IsWashingtonState, '')
-        -- COALESCE(VP.FileName, ''),
-        -- COALESCE(VP.source_system, ''),
-        -- CAST(VP.ingestion_date AS STRING)
     ), 256) AS HASH_ID
 
 FROM EVLytics_silver.vehiclepopulation VP
-LEFT JOIN EVLytics_gold.DimVehicle DV ON DV.Make = VP.Make AND DV.Model = VP.Model AND DV.ModelYear = VP.ModelYear
-LEFT JOIN EVLytics_gold.DimGeoPoint DG ON DG.VehicleLocation = VP.VehicleLocation
-LEFT JOIN evlytics_gold.dimlegislativedistrict DLD ON DLD.LegislativeDistrictNumber = VP.LegislativeDistrict AND DLD.IsCurrent = TRUE
-LEFT JOIN dbo.DimDate DD ON CAST(DD.Date as date) = CAST(VP.ingestion_date as date)
-LEFT JOIN EVLytics_gold.DimElectricUtility DEU ON DEU.ElectricUtility = VP.ElectricUtility
-LEFT JOIN EVLytics_gold.DimLocation DL ON DL.County = VP.County AND DL.City = VP.City AND DL.State = VP.State 
-    AND DL.PostalCode = VP.PostalCode AND DL.CensusTract2020 = VP.2020CensusTract AND DL.IsCurrent = TRUE
+
+-- Join to Dimension Tables
+LEFT JOIN EVLytics_gold.DimVehicle DV 
+    ON DV.Make = VP.Make AND DV.Model = VP.Model AND DV.ModelYear = VP.ModelYear
+
+LEFT JOIN EVLytics_gold.DimGeoPoint DG 
+    ON DG.VehicleLocation = VP.VehicleLocation
+
+LEFT JOIN evlytics_gold.DimLegislativeDistrict DLD 
+    ON DLD.LegislativeDistrictNumber = VP.LegislativeDistrict AND DLD.IsCurrent = TRUE
+
+LEFT JOIN dbo.DimDate DD 
+    ON CAST(DD.Date as date) = CAST(VP.ingestion_date as date)
+
+LEFT JOIN EVLytics_gold.DimElectricUtility DEU 
+    ON DEU.ElectricUtility = VP.ElectricUtility
+
+LEFT JOIN EVLytics_gold.DimLocation DL 
+    ON DL.County = VP.County 
+    AND DL.City = VP.City 
+    AND DL.State = VP.State 
+    AND DL.PostalCode = VP.PostalCode 
+    AND DL.CensusTract2020 = VP.2020CensusTract 
+    AND DL.IsCurrent = TRUE
+
+-- Optional data scope filter
 WHERE VP.IsWashingtonState = 'WASHINGTON STATE'
 """)
 
-
-# COMMAND ----------
-
+# Step 2 - Register the DataFrame as a Temp View for MERGE operation
 fact_electricVehicleRegistrations.createOrReplaceTempView("vw_fact_ElectricVehicleRegistrations")
 
-# COMMAND ----------
 
-# MAGIC %sql
-# MAGIC MERGE INTO evlytics_gold.Fact_ElectricVehicleRegistrations AS tgt
-# MAGIC USING vw_fact_ElectricVehicleRegistrations AS src
-# MAGIC ON tgt.DateKey = src.DateKey 
-# MAGIC AND tgt.LocationKey = src.LocationKey 
-# MAGIC AND tgt.VehicleKey = src.VehicleKey 
-# MAGIC AND tgt.UtilityKey = src.UtilityKey 
-# MAGIC AND tgt.GeoPointKey = src.GeoPointKey 
-# MAGIC AND tgt.LegislativeDistrictKey = src.LegislativeDistrictKey
-# MAGIC AND tgt.SnapshotDate = src.SnapshotDate
-# MAGIC AND tgt.DOLVehicleID = src.DOLVehicleID
-# MAGIC
-# MAGIC WHEN MATCHED AND (tgt.HASH_ID <> src.HASH_ID) THEN UPDATE SET
-# MAGIC     tgt.UpdatedDate = current_timestamp(),
-# MAGIC     tgt.SnapshotDate = src.SnapshotDate,
-# MAGIC     tgt.DateKey = src.DateKey,
-# MAGIC     tgt.LocationKey = src.LocationKey,
-# MAGIC     tgt.VehicleKey = src.VehicleKey,
-# MAGIC     tgt.UtilityKey = src.UtilityKey,
-# MAGIC     tgt.GeoPointKey = src.GeoPointKey,
-# MAGIC     tgt.LegislativeDistrictKey = src.LegislativeDistrictKey,
-# MAGIC     tgt.VehicleIdentificationNumber = src.VehicleIdentificationNumber,
-# MAGIC     tgt.ElectricVehicleType = src.ElectricVehicleType,
-# MAGIC     tgt.CAFVEligibility = src.CAFVEligibility,
-# MAGIC     tgt.ElectricRange = src.ElectricRange,
-# MAGIC     tgt.BaseMSRP = src.BaseMSRP,
-# MAGIC     tgt.DOLVehicleID = src.DOLVehicleID,
-# MAGIC     tgt.IsWashingtonState = src.IsWashingtonState,
-# MAGIC     tgt.FileName = src.FileName,
-# MAGIC     tgt.SourceSystem = src.SourceSystem
-# MAGIC
-# MAGIC WHEN NOT MATCHED THEN INSERT (
-# MAGIC     SnapshotDate, DateKey, LocationKey, VehicleKey, UtilityKey, GeoPointKey,LegislativeDistrictKey, VehicleIdentificationNumber, ElectricVehicleType,CAFVEligibility, ElectricRange, BaseMSRP, DOLVehicleID, IsWashingtonState,FileName, SourceSystem, UpdatedDate, InsertedDate, HASH_ID
-# MAGIC )
-# MAGIC VALUES (
-# MAGIC     src.SnapshotDate, src.DateKey, src.LocationKey, src.VehicleKey, src.UtilityKey, src.GeoPointKey,src.LegislativeDistrictKey, src.VehicleIdentificationNumber, src.ElectricVehicleType,src.CAFVEligibility, src.ElectricRange, src.BaseMSRP, src.DOLVehicleID, src.IsWashingtonState,
-# MAGIC     src.FileName, src.SourceSystem, src.UpdatedDate, src.InsertedDate, src.HASH_ID
-# MAGIC );
+
+-- Step 3 - MERGE into Gold Fact Table with HASH-based change detection
+MERGE INTO evlytics_gold.Fact_ElectricVehicleRegistrations AS tgt
+USING vw_fact_ElectricVehicleRegistrations AS src
+ON tgt.DateKey = src.DateKey 
+   AND tgt.LocationKey = src.LocationKey 
+   AND tgt.VehicleKey = src.VehicleKey 
+   AND tgt.UtilityKey = src.UtilityKey 
+   AND tgt.GeoPointKey = src.GeoPointKey 
+   AND tgt.LegislativeDistrictKey = src.LegislativeDistrictKey
+   AND tgt.SnapshotDate = src.SnapshotDate
+   AND tgt.DOLVehicleID = src.DOLVehicleID
+
+-- When matched and data has changed, update only
+WHEN MATCHED AND tgt.HASH_ID <> src.HASH_ID THEN UPDATE SET
+    tgt.UpdatedDate = current_timestamp(),
+    tgt.SnapshotDate = src.SnapshotDate,
+    tgt.DateKey = src.DateKey,
+    tgt.LocationKey = src.LocationKey,
+    tgt.VehicleKey = src.VehicleKey,
+    tgt.UtilityKey = src.UtilityKey,
+    tgt.GeoPointKey = src.GeoPointKey,
+    tgt.LegislativeDistrictKey = src.LegislativeDistrictKey,
+    tgt.VehicleIdentificationNumber = src.VehicleIdentificationNumber,
+    tgt.ElectricVehicleType = src.ElectricVehicleType,
+    tgt.CAFVEligibility = src.CAFVEligibility,
+    tgt.ElectricRange = src.ElectricRange,
+    tgt.BaseMSRP = src.BaseMSRP,
+    tgt.DOLVehicleID = src.DOLVehicleID,
+    tgt.IsWashingtonState = src.IsWashingtonState,
+    tgt.FileName = src.FileName,
+    tgt.SourceSystem = src.SourceSystem
+
+-- When new, insert into fact table
+WHEN NOT MATCHED THEN INSERT (
+    SnapshotDate, DateKey, LocationKey, VehicleKey, UtilityKey, GeoPointKey,
+    LegislativeDistrictKey, VehicleIdentificationNumber, ElectricVehicleType,
+    CAFVEligibility, ElectricRange, BaseMSRP, DOLVehicleID, IsWashingtonState,
+    FileName, SourceSystem, UpdatedDate, InsertedDate, HASH_ID
+)
+VALUES (
+    src.SnapshotDate, src.DateKey, src.LocationKey, src.VehicleKey, src.UtilityKey, src.GeoPointKey,
+    src.LegislativeDistrictKey, src.VehicleIdentificationNumber, src.ElectricVehicleType,
+    src.CAFVEligibility, src.ElectricRange, src.BaseMSRP, src.DOLVehicleID, src.IsWashingtonState,
+    src.FileName, src.SourceSystem, src.UpdatedDate, src.InsertedDate, src.HASH_ID
+);
