@@ -4,6 +4,8 @@
 # Source: EVLytics_silver.vehiclepopulation
 # Target: EVLytics_gold.Fact_ElectricVehicleRegistrations
 
+
+
 # Step 1 - Transform: Join dimension tables and enrich the source data
 fact_electricVehicleRegistrations = spark.sql("""
 SELECT 
