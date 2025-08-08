@@ -5,7 +5,7 @@ from pyspark.sql.types import *
 
 # COMMAND ----------
 
-# MAGIC %run "/Repos/waleokare@gmail.com/databricks-project/Projects/Setup/04_Configurations"
+# MAGIC %run "/Repos/patrick@gmail.com/databricks-project/Projects/Setup/04_Configurations"
 
 # COMMAND ----------
 
@@ -16,10 +16,10 @@ p_PlatformName = 'databricks'
 p_EntityName = 'vehicle-specification/'
 p_FileName = 'vehicle_specs_lookup.csv'
 p_SourceQuery = ''
-landing_folder_path = '/mnt/datamladls26/landing/'
-databricks_bronze_path = '/mnt/datamladls26/lake/databricks/bronze/'
-databricks_silver_path = '/mnt/datamladls26/lake/databricks/silver/'
-databricks_gold_path = '/mnt/datamladls26/lake/databricks/gold/'
+landing_folder_path = '/mnt/datalake/landing/'
+databricks_bronze_path = '/mnt/datalake/lake/databricks/bronze/'
+databricks_silver_path = '/mnt/datalake/lake/databricks/silver/'
+databricks_gold_path = '/mnt/datalake/lake/databricks/gold/'
 
 # COMMAND ----------
 
