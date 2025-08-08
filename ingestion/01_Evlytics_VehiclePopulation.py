@@ -5,36 +5,36 @@ from pyspark.sql.types import *
 
 # COMMAND ----------
 
-# MAGIC %run "/Repos/waleokare@gmail.com/databricks-project/Projects/Setup/04_Configurations"
+# MAGIC %run "/Repos/patrick@gmail.com/databricks-project/Projects/Setup/04_Configurations"
 
 # COMMAND ----------
 
 # Retrieve parameters passed from the master notebook
-# p_Domain = dbutils.widgets.get("Domain")
-# p_ProjectName = dbutils.widgets.get("ProjectName")
-# p_DataSourceName = dbutils.widgets.get("DataSourceName")
-# p_PlatformName = dbutils.widgets.get("PlatformName")
-# p_EntityName = dbutils.widgets.get("EntityName")
-# p_FileName = dbutils.widgets.get("FileName")
-# p_SourceQuery = dbutils.widgets.get("SourceQuery")
-# landing_folder_path = dbutils.widgets.get("landing_folder_path")
-# databricks_bronze_path = dbutils.widgets.get("databricks_bronze_path")
-# databricks_silver_path = dbutils.widgets.get("databricks_silver_path")
-# databricks_gold_path = dbutils.widgets.get("databricks_gold_path")
+p_Domain = dbutils.widgets.get("Domain")
+p_ProjectName = dbutils.widgets.get("ProjectName")
+p_DataSourceName = dbutils.widgets.get("DataSourceName")
+p_PlatformName = dbutils.widgets.get("PlatformName")
+p_EntityName = dbutils.widgets.get("EntityName")
+p_FileName = dbutils.widgets.get("FileName")
+p_SourceQuery = dbutils.widgets.get("SourceQuery")
+landing_folder_path = dbutils.widgets.get("landing_folder_path")
+databricks_bronze_path = dbutils.widgets.get("databricks_bronze_path")
+databricks_silver_path = dbutils.widgets.get("databricks_silver_path")
+databricks_gold_path = dbutils.widgets.get("databricks_gold_path")
 
 # COMMAND ----------
 
-p_Domain = 'transportation'
-p_ProjectName = 'evlytics-integration'
-p_DataSourceName = 'web'
-p_PlatformName = 'databricks'
-p_EntityName = 'vehicles-population/'
-p_FileName = 'Electric_Vehicle_Population_Data_20250723.csv'
-p_SourceQuery = ''
-landing_folder_path = '/mnt/datamladls26/landing/'
-databricks_bronze_path = '/mnt/datamladls26/lake/databricks/bronze/'
-databricks_silver_path = '/mnt/datamladls26/lake/databricks/silver/'
-databricks_gold_path = '/mnt/datamladls26/lake/databricks/gold/'
+# p_Domain = 'transportation'
+# p_ProjectName = 'evlytics-integration'
+# p_DataSourceName = 'web'
+# p_PlatformName = 'databricks'
+# p_EntityName = 'vehicles-population/'
+# p_FileName = 'Electric_Vehicle_Population_Data_20250723.csv'
+# p_SourceQuery = ''
+# landing_folder_path = '/mnt/datalake/landing/'
+# databricks_bronze_path = '/mnt/datalake/lake/databricks/bronze/'
+# databricks_silver_path = '/mnt/datalake/lake/databricks/silver/'
+# databricks_gold_path = '/mnt/datalake/lake/databricks/gold/'
 
 # COMMAND ----------
 
