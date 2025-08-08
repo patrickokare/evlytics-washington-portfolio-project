@@ -1,16 +1,5 @@
 # Databricks notebook source
-# %sql
-# -- Enable column mapping on the Delta table
-# ALTER TABLE skyflights_gold.factflights 
-# SET TBLPROPERTIES (
-#   'delta.minReaderVersion' = '2', 
-#   'delta.minWriterVersion' = '5', 
-#   'delta.columnMapping.mode' = 'name'
-# );
 
-# -- Rename the column after enabling column mapping
-# ALTER TABLE skyflights_gold.factflights 
-# RENAME COLUMN Carrier_Key TO Carrier_Airline_Key;
 
 # COMMAND ----------
 
