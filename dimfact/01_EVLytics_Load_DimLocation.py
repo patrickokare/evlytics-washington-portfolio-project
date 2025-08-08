@@ -54,7 +54,7 @@ dimLocation_df = spark.sql("""
         ) AS row_num
 
         FROM evlytics_silver.vehiclepopulation AS source 
-        WHERE FileName NOT IN (SELECT DISTINCT FileName FROM evlytics_gold.DimLocation) -- NB:REPLACE this with IngestionDate watermark framework table  is in place.
+        WHERE FileName NOT IN (SELECT DISTINCT FileName FROM evlytics_gold.DimLocation) -- NB: REPLACE with watermark framework table.
     ) AS deduped
     WHERE row_num = 1;
     """)
