@@ -1,6 +1,6 @@
 # Databricks Notebook
 # Title: DimLocation - SCD Type 2 with Deduplication
-# Author: Patrick Okra
+# Author: Patrick Okare
 # Date: 2025-08-08
 # Description: This notebook applies SCD Type 2 logic on location data 
 # using a hashed natural key and deduplication framework.
