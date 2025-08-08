@@ -1,11 +1,12 @@
 # Databricks notebook source
+#Author: PATRICK OKARE
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import *
 from pyspark.sql.types import *
 
 # COMMAND ----------
 
-# MAGIC %run "/Repos/patrick@gmail.com/databricks-project/Projects/Setup/04_Configurations"
+# MAGIC %run "/Repos/test@gmail.com/databricks-project/Projects/Setup/04_Configurations"
 
 # COMMAND ----------
 
