@@ -1,19 +1,19 @@
 # Databricks notebook source
 # MAGIC %sql
 # MAGIC CREATE DATABASE IF NOT EXISTS evlytics_bronze
-# MAGIC LOCATION "/mnt/datamladls26/lake/databricks/bronze/transportation/evlytics-integration/web/"
+# MAGIC LOCATION "/mnt/datalake/lake/databricks/bronze/transportation/evlytics-integration/web/"
 
 # COMMAND ----------
 
 # MAGIC %sql
 # MAGIC CREATE DATABASE IF NOT EXISTS evlytics_silver
-# MAGIC LOCATION "/mnt/datamladls26/lake/databricks/silver/transportation/evlytics-integration/web/"
+# MAGIC LOCATION "/mnt/datalake/lake/databricks/silver/transportation/evlytics-integration/web/"
 
 # COMMAND ----------
 
 # MAGIC %sql
 # MAGIC CREATE DATABASE IF NOT EXISTS evlytics_gold
-# MAGIC LOCATION "/mnt/datamladls26/lake/databricks/gold/transportation/evlytics-integration/"
+# MAGIC LOCATION "/mnt/datalake/lake/databricks/gold/transportation/evlytics-integration/"
 
 # COMMAND ----------
 
@@ -37,5 +37,5 @@
 #     HASH_ID STRING
 # )
 # USING DELTA
-# LOCATION "/mnt/datamladls26/lake/databricks/silver/sports/nbanalytics/github/players"
+# LOCATION "/mnt/datalake/lake/databricks/silver/sports/nbanalytics/github/players"
 # """)
