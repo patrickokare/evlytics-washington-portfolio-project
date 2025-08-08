@@ -19,7 +19,7 @@
 #     HASH_ID STRING
 # )
 # USING DELTA
-# LOCATION "/mnt/datamladls26/lake/databricks/gold/transportation/evlytics-integration/dimlocation";
+# LOCATION "/mnt/datalake/lake/databricks/gold/transportation/evlytics-integration/dimlocation";
 
 # COMMAND ----------
 
@@ -35,7 +35,7 @@
 #     HASH_ID STRING
 # )
 # USING DELTA
-# LOCATION "/mnt/datamladls26/lake/databricks/gold/transportation/evlytics-integration/dimelectricutility";
+# LOCATION "/mnt/datalake/lake/databricks/gold/transportation/evlytics-integration/dimelectricutility";
 
 # COMMAND ----------
 
@@ -53,7 +53,7 @@
 #     HASH_ID STRING
 # )
 # USING DELTA
-# LOCATION '/mnt/datamladls26/lake/databricks/gold/transportation/evlytics-integration/dimvehicle'
+# LOCATION '/mnt/datalake/lake/databricks/gold/transportation/evlytics-integration/dimvehicle'
 
 # COMMAND ----------
 
@@ -73,7 +73,7 @@
 # MAGIC     HASH_ID STRING
 # MAGIC )
 # MAGIC USING DELTA
-# MAGIC LOCATION '/mnt/datamladls26/lake/databricks/gold/transportation/evlytics-integration/dimgeopoint'
+# MAGIC LOCATION '/mnt/datalake/lake/databricks/gold/transportation/evlytics-integration/dimgeopoint'
 
 # COMMAND ----------
 
@@ -95,7 +95,7 @@
 # MAGIC     HASH_ID STRING
 # MAGIC )
 # MAGIC USING DELTA
-# MAGIC LOCATION '/mnt/datamladls26/lake/databricks/gold/transportation/evlytics-integration/dimlegislativedistrict';
+# MAGIC LOCATION '/mnt/datalake/lake/databricks/gold/transportation/evlytics-integration/dimlegislativedistrict';
 
 # COMMAND ----------
 
@@ -124,4 +124,4 @@
 # MAGIC     HASH_ID STRING
 # MAGIC )
 # MAGIC USING DELTA
-# MAGIC LOCATION '/mnt/datamladls26/lake/databricks/gold/transportation/evlytics-integration/fact_electricvehicleregistrations'
+# MAGIC LOCATION '/mnt/datalake/lake/databricks/gold/transportation/evlytics-integration/fact_electricvehicleregistrations'
