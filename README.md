@@ -121,4 +121,4 @@ PATRICK OKARE
 - **Patrick O.**  
   Data Engineer | Data Storyteller | Building Lakehouses with Purpose  
 
-> For more portfolio projects, visit [patricko.dev](#)
+> For more portfolio projects, visit [(https://github.com/PatrickOkare)](#)
