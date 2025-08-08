@@ -89,7 +89,7 @@ The following Gold views were created for Power BI / Semantic Layer:
 This project helps answer questions like:
 
 - “Which electric utility areas have the most EVs?”
-- “How is EV adoption evolving over time?”
+- “How is EV adoption evolving?”
 - “What are the most common EV models and types registered?”
 - “How do redistricting changes affect EV representation?”
 - “What is the average electric range by EV type or county?”
@@ -110,12 +110,13 @@ This project helps answer questions like:
 
 - 🔄 Real-time streaming ingestion with Auto Loader  
 - 🌎 Geospatial clustering using census data  
-- 🧠 Predictive modeling for EV adoption forecasting  
+- 🧠 Predictive modelling for EV adoption forecasting  
 - 🔌 Integration with charging station datasets  
 
 ---
 
 ## 👨‍💻 Author
+PATRICK OKARE
 
 - **Patrick O.**  
   Data Engineer | Data Storyteller | Building Lakehouses with Purpose  
