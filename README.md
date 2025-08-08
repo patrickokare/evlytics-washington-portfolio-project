@@ -118,7 +118,7 @@ This project helps answer questions like:
 ## 👨‍💻 Author
 PATRICK OKARE
 
-- **Patrick O.**  
+- **Patrick Okare.**  
   Data Engineer | Data Storyteller | Building Lakehouses with Purpose  
 
 > For more portfolio projects, visit [(https://github.com/PatrickOkare)](#)
