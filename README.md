@@ -115,6 +115,9 @@ This project helps answer questions like:
 
 ---
 
+## Data StoryTelling
+https://patrickokare.substack.com/p/lakehouse-chronicles-implementing
+
 ## 👨‍💻 Author
 PATRICK OKARE
 
