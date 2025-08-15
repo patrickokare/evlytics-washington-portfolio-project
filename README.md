@@ -50,7 +50,7 @@ This repository contains the full implementation of a modern **Electric Vehicle 
 
 ## 🌟 Semantic Views for Reporting
 
-The following Gold views were created for Power BI / Semantic Layer:
+The following Gold views were created for Present / Semantic Layer:
 
 1. **EV Adoption Trends**
    ```sql
@@ -102,7 +102,7 @@ This project helps answer questions like:
 - **Language**: PySpark, SQL  
 - **Architecture**: Medallion + Dimensional Modeling (Kimball)  
 - **Storage Format**: Delta  
-- **Reporting**: Power BI (Semantic Views)
+- **Reporting**: Present BI Tool (Semantic Layer)
 
 ---
 
