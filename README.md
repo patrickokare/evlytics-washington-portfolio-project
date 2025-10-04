@@ -116,7 +116,7 @@ This project helps answer questions like:
 ---
 
 ## Data StoryTelling
-https://patrickokare.substack.com/p/lakehouse-chronicles-implementing
+[https://patrickokare.substack.com/p/lakehouse-chronicles-implementing](https://karetech.medium.com/lakehouse-chronicles-implementing-medallion-architecture-with-databricks-evlytics-vehicles-3efdbc53d453)
 
 ## 👨‍💻 Author
 PATRICK OKARE
